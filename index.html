@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Creatormatchr · Find Instagram influencers by niche and location</title>
+<meta name="description" content="Search curated lists of Instagram creators by niche and location, with median engagement, Reel views and the brand collabs they've already done.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F8FA; --surface:#FFFFFF; --ink:#19172B; --muted:#5E6175; --rule:#E3E5EC; --soft:#EEF0F5;
+  --marigold:#F5B700; --marigold-deep:#C99200; --marigold-tint:#FFF4CC; --ok:#1E8E5A;
+  --display:'Bricolage Grotesque', system-ui, sans-serif; --body:'Instrument Sans', system-ui, sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:16.5px/1.6 var(--body)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--marigold);outline-offset:2px}
+.mock{background:var(--ink);color:#fff;font-size:13.5px;text-align:center;padding:7px 16px}
+.site{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 32px;background:var(--surface);border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:20}
+.logo{font:800 22px/1 var(--display);letter-spacing:-.02em;text-decoration:none}
+.logo span{background:var(--marigold);padding:0 4px;border-radius:4px}
+.site nav{display:flex;gap:24px;align-items:center;font-weight:500}
+.site nav a{text-decoration:none}
+.site nav a:hover{text-decoration:underline}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 15px/1 var(--body);border-radius:999px;padding:12px 18px;border:1px solid var(--ink);background:var(--surface);color:var(--ink);cursor:pointer;text-decoration:none}
+.btn.primary{background:var(--marigold);border-color:var(--marigold-deep)}
+.btn.small{padding:8px 13px;font-size:14px}
+.btn.dark{background:var(--ink);color:#fff}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+
+/* hero */
+.hero{padding:64px 0 40px}
+.hero h1{font:800 clamp(38px,6vw,72px)/1 var(--display);letter-spacing:-.04em;margin:0;max-width:16ch}
+.hero h1 mark{background:linear-gradient(transparent 58%, var(--marigold) 58%, var(--marigold) 92%, transparent 92%);color:inherit;padding:0 .05em}
+.hero p.sub{max-width:58ch;margin:20px 0 0;font-size:19px;color:var(--muted)}
+.search{position:relative;max-width:720px;margin:30px 0 0}
+.search input{width:100%;font:500 18px/1 var(--body);padding:20px 132px 20px 22px;border:2px solid var(--ink);border-radius:16px;background:var(--surface);color:var(--ink)}
+.search input::placeholder{color:#8A8DA0}
+.search .go{position:absolute;right:8px;top:8px;bottom:8px;border-radius:10px}
+.results{position:absolute;left:0;right:0;top:calc(100% + 8px);background:var(--surface);border:1px solid var(--rule);border-radius:14px;box-shadow:0 18px 40px rgba(25,23,43,.16);padding:8px;z-index:15;max-height:420px;overflow:auto}
+.results[hidden]{display:none}
+.results h3{font:600 12.5px/1 var(--body);color:var(--muted);margin:10px 12px 6px}
+.results a{display:flex;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:8px;text-decoration:none}
+.results a:hover,.results a:focus{background:var(--paper);outline:none}
+.results a small{color:var(--muted);white-space:nowrap}
+.results .empty{padding:12px;color:var(--muted)}
+.popular{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:16px 0 0;font-size:14.5px;color:var(--muted)}
+.popular a{border:1px solid var(--rule);background:var(--surface);border-radius:999px;padding:6px 12px;text-decoration:none;color:var(--ink)}
+.popular a:hover{border-color:var(--ink)}
+.hgrid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:48px;align-items:center}
+.recent{background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:18px 20px;box-shadow:0 14px 34px rgba(25,23,43,.07)}
+.recent h2{font:700 17px/1.2 var(--display);margin:0 0 6px;display:flex;justify-content:space-between;align-items:baseline}
+.recent h2 span{font:500 13px/1 var(--body);color:var(--muted)}
+.recent ol{list-style:none;margin:0;padding:0}
+.recent li a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:11px 0;border-top:1px solid var(--soft);text-decoration:none}
+.recent li:first-child a{border-top:0}
+.recent li a:hover b{text-decoration:underline}
+.recent b{font-weight:600;font-size:15px;line-height:1.3}
+.recent small{color:var(--muted);font-size:13px}
+.recent em{grid-row:1/3;grid-column:2;align-self:center;font:normal 600 12px/1 var(--body);color:var(--ok);background:#E6F4EC;border-radius:999px;padding:5px 8px;white-space:nowrap}
+.facts{display:flex;flex-wrap:wrap;gap:8px 28px;margin:34px 0 0;padding-top:20px;border-top:1px solid var(--rule);color:var(--muted);font-size:15px}
+.facts b{font:800 22px/1 var(--display);color:var(--ink);margin-right:6px;font-variant-numeric:tabular-nums}
+
+section{margin-top:72px}
+.shead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.shead h2{font:800 clamp(28px,3.4vw,38px)/1.08 var(--display);letter-spacing:-.025em;margin:0}
+.shead p{margin:6px 0 0;color:var(--muted)}
+.shead a{font-weight:600;white-space:nowrap}
+
+/* list cards */
+.lists{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.lcard{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:18px 18px 16px;text-decoration:none;display:flex;flex-direction:column;gap:12px;transition:border-color .15s}
+.lcard:hover{border-color:var(--ink)}
+.lcard h3{font:700 19px/1.2 var(--display);letter-spacing:-.01em;margin:0}
+.lmeta{font-size:13px;color:var(--muted);display:flex;gap:6px;flex-wrap:wrap}
+.lmeta .tag{background:var(--soft);border-radius:999px;padding:3px 8px;color:var(--ink)}
+.faces{display:flex}
+.faces i{width:30px;height:30px;border-radius:50%;border:2px solid var(--surface);margin-left:-8px;background:var(--marigold-tint);display:grid;place-items:center;font:700 11px/1 var(--display);font-style:normal}
+.faces i:first-child{margin-left:0}
+.lstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--soft);padding-top:12px;margin:auto 0 0}
+.lstats dt{font-size:12px;color:var(--muted)}
+.lstats dd{margin:2px 0 0;font:700 17px/1.1 var(--display);font-variant-numeric:tabular-nums}
+
+/* niches */
+.niches{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.niche{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:16px 18px}
+.niche h3{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font:700 17px/1.2 var(--display);margin:0 0 8px}
+.niche h3 span{font:500 13px/1 var(--body);color:var(--muted)}
+.niche ul{list-style:none;margin:0;padding:0;font-size:14.5px}
+.niche li{padding:3px 0}
+.niche li a{text-decoration:none}.niche li a:hover{text-decoration:underline}
+.niche .all{display:inline-block;margin-top:8px;font-size:14px;font-weight:600}
+
+/* places */
+.places{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.place{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:16px 18px}
+.place h3{font:700 17px/1.2 var(--display);margin:0 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips a{font-size:14px;text-decoration:none;background:var(--paper);border:1px solid var(--rule);border-radius:999px;padding:5px 11px}
+.chips a:hover{border-color:var(--ink)}
+
+/* why */
+.why{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:48px;align-items:center}
+.why ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:18px}
+.why li h3{font:700 19px/1.25 var(--display);margin:0 0 3px}
+.why li p{margin:0;color:var(--muted)}
+.sample{background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:20px;box-shadow:0 14px 34px rgba(25,23,43,.08)}
+.srow{display:flex;align-items:center;gap:12px}
+.srow .av{width:48px;height:48px;border-radius:50%;background:var(--marigold-tint);display:grid;place-items:center;font:700 16px/1 var(--display)}
+.srow b{font:700 18px/1.2 var(--display);display:block}
+.srow small{color:var(--muted)}
+.sstrip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--rule);border-radius:10px;margin:14px 0 0;background:#FBFBFD}
+.sstrip div{padding:9px 10px;border-left:1px solid var(--rule)}.sstrip div:first-child{border-left:0}
+.sstrip dt{font-size:11.5px;color:var(--muted)}.sstrip dd{margin:2px 0 0;font:700 16px/1.1 var(--display)}
+.scollab{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--soft);font-size:14px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.scollab strong{font:800 17px/1 var(--display)}
+.scollab .ok{color:var(--ok);font-weight:600}
+.scollab .chip{background:var(--soft);border-radius:999px;padding:4px 9px;font-size:12.5px}
+
+/* directory */
+.az{display:flex;flex-wrap:wrap;gap:6px}
+.az a{width:40px;height:40px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--rule);border-radius:10px;text-decoration:none;font:700 15px/1 var(--display)}
+.az a:hover{border-color:var(--ink);background:var(--marigold-tint)}
+
+/* two audiences */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.aud{border-radius:20px;padding:30px;display:flex;flex-direction:column;gap:12px}
+.aud h2{font:800 28px/1.1 var(--display);letter-spacing:-.02em;margin:0}
+.aud p{margin:0;max-width:46ch}
+.aud .acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.aud.brands{background:var(--ink);color:#fff}.aud.brands p{color:#D6D6E2}
+.aud.creators{background:var(--marigold-tint);border:1px solid #F1DD95}.aud.creators p{color:#4A4535}
+
+footer{margin-top:88px;background:var(--surface);border-top:1px solid var(--rule)}
+.fgrid{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:28px;padding:44px 0 28px}
+.fgrid h4{font:700 15px/1.2 var(--display);margin:0 0 10px}
+.fgrid ul{list-style:none;margin:0;padding:0;font-size:14.5px;color:var(--muted)}
+.fgrid li{padding:3px 0}
+.fgrid a{text-decoration:none}.fgrid a:hover{text-decoration:underline;color:var(--ink)}
+.fbrand p{color:var(--muted);font-size:14.5px;margin:12px 0 0;max-width:30ch}
+.fbase{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;padding:18px 0 28px;border-top:1px solid var(--rule);font-size:13.5px;color:var(--muted)}
+.fbase nav{display:flex;gap:18px;flex-wrap:wrap}
+.fbase a{text-decoration:none}
+
+@media (max-width:1000px){
+  .lists{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .niches{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .places{grid-template-columns:1fr}
+  .why{grid-template-columns:1fr}
+  .hgrid{grid-template-columns:1fr}
+  .recent{margin-top:28px}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .fbrand{grid-column:1/-1}
+}
+@media (max-width:640px){
+  .wrap{padding:0 18px}
+  .site{padding:14px 18px}.site nav a:not(.btn){display:none}
+  .hero{padding-top:40px}
+  .search input{padding-right:22px}
+  .search .go{position:static;width:100%;margin-top:10px}
+  .lists,.niches,.duo{grid-template-columns:1fr}
+  .sstrip{grid-template-columns:1fr 1fr}
+  .sstrip div:nth-child(3){border-left:0}
+  .sstrip div:nth-child(-n+2){border-bottom:1px solid var(--rule)}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.lcard{transition:none}}
+</style>
+</head>
+<body>
+<div class="mock">Homepage mockup: list names, creators and numbers below are sample data.</div>
+<header class="site">
+  <a class="logo" href="index.html">creator<span>matchr</span></a>
+  <nav aria-label="Main">
+    <a href="#lists">Lists</a><a href="#niches">Niches</a><a href="#places">Locations</a><a href="#directory">Directory</a><a href="pricing.html">Pricing</a>
+    <a class="btn primary small" href="list_demo.html#custom-list">Get a custom list</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <section class="hero" style="margin-top:0"><div class="hgrid"><div>
+    <h1>Find the right <mark>influencers</mark> for your next campaign</h1>
+    <p class="sub">Curated lists of Instagram creators by niche and location, with median engagement, Reel views and every brand collab they've disclosed.</p>
+    <form class="search" role="search" id="sform" autocomplete="off">
+      <label for="q" style="position:absolute;left:-9999px">Search lists and creators</label>
+      <input id="q" type="search" placeholder="Try “London beauty” or “gaming India”" aria-controls="res" aria-expanded="false">
+      <button class="btn primary go" type="submit">Search</button>
+      <div class="results" id="res" hidden></div>
+    </form>
+    <div class="popular"><span>Popular:</span><span id="pop"></span></div>
+    </div>
+    <aside class="recent" aria-labelledby="rc"><h2 id="rc">Recently updated <span>this week</span></h2><ol id="recent"></ol></aside>
+    </div>
+    <div class="facts" id="facts"></div>
+  </section>
+
+  <section id="lists">
+    <div class="shead"><div><h2>Most viewed lists</h2><p>Updated every two weeks from Instagram's official API.</p></div><a href="#niches">Browse all lists</a></div>
+    <div class="lists" id="lgrid"></div>
+  </section>
+
+  <section id="niches">
+    <div class="shead"><div><h2>Browse by niche</h2><p id="nsub"></p></div></div>
+    <div class="niches" id="ngrid"></div>
+  </section>
+
+  <section id="places">
+    <div class="shead"><div><h2>Browse by location</h2><p>Creators confirmed to be based where the list says.</p></div></div>
+    <div class="places" id="pgrid"></div>
+  </section>
+
+  <section>
+    <div class="why">
+      <div>
+        <div class="shead" style="margin-bottom:22px"><div><h2>Not another recycled “top 100”</h2></div></div>
+        <ul>
+          <li><h3>Proof of brand work</h3><p>Every creator shows the collab posts they've disclosed, so you can see who already works with brands like yours.</p></li>
+          <li><h3>Numbers that don't flatter</h3><p>Median likes and Reel views, without pinned posts or one viral hit. Each number explains how it was calculated.</p></li>
+          <li><h3>Paid spots are labelled</h3><p>Editors choose who's on a list. Featured profiles are marked as paid and never numbered.</p></li>
+          <li><h3>Kept fresh</h3><p>Stats refresh every two weeks, and every list shows when it was last checked. <a href="#">Methodology</a></p></li>
+        </ul>
+      </div>
+      <div class="sample" aria-label="Example creator row">
+        <div class="srow"><span class="av">MO</span><div><b>Maya Okafor</b><small>@maya.makes.faces · Micro · London</small></div></div>
+        <dl class="sstrip">
+          <div><dt>Followers</dt><dd>48.2K</dd></div>
+          <div><dt>Eng. rate</dt><dd>4.2%</dd></div>
+          <div><dt>Median likes</dt><dd>2K</dd></div>
+          <div><dt>Reel views</dt><dd>79K</dd></div>
+        </dl>
+        <div class="scollab"><strong>18</strong> collab posts in the last 100 <span class="ok">Disclosed in caption</span><span class="chip">Glossier</span><span class="chip">Charlotte Tilbury</span><span class="chip">Boots</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="directory">
+    <div class="shead"><div><h2>Creator directory</h2><p>Every creator on every list, A to Z.</p></div><a href="#">Open the full directory</a></div>
+    <nav class="az" aria-label="Creators by first letter" id="az"></nav>
+  </section>
+
+  <section>
+    <div class="duo">
+      <div class="aud brands">
+        <h2>For brands</h2>
+        <p>Tell us your product, budget and dates. We'll send a shortlist of creators who fit, with contact details, as a spreadsheet.</p>
+        <div class="acts"><a class="btn primary" href="list_demo.html#custom-list">Get a custom list</a><a class="btn" href="#lists" style="background:transparent;color:#fff;border-color:#ffffff66">Browse lists</a></div>
+      </div>
+      <div class="aud creators">
+        <h2>For creators</h2>
+        <p>Being on a list is free and decided by our editors. Claim your profile to correct your details, or get a labelled featured spot.</p>
+        <div class="acts"><a class="btn dark" href="pricing.html">See featured plans</a><a class="btn" href="#">Claim your profile</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div class="fbrand"><a class="logo" href="index.html">creator<span>matchr</span></a><p>Instagram creator lists with brand collab evidence, for brands and agencies.</p></div>
+      <div><h4>Niches</h4><ul id="fn"></ul></div>
+      <div><h4>Popular lists</h4><ul id="fl"></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Contact</a></li><li><a href="#">Methodology</a></li><li><a href="#">Editorial policy</a></li><li><a href="pricing.html">Pricing</a></li></ul></div>
+      <div><h4>Creators</h4><ul><li><a href="#">Claim your profile</a></li><li><a href="#">Remove my profile</a></li><li><a href="#">Submit a creator</a></li><li><a href="pricing.html">Get featured</a></li></ul></div>
+    </div>
+    <div class="fbase"><span>© 2026 Creatormatchr. Data from Instagram's official API. Not affiliated with Instagram or Meta.</span><nav aria-label="Legal"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Refund policy</a><a href="#">Cookies</a></nav></div>
+  </div>
+</footer>
+
+<script>
+/* Sample catalog. On the real site this comes from the lists table. */
+const LISTS = [
+  ['London Micro Beauty Influencers','Beauty & Fashion','London, UK',19,'612K',4.1,135,'2d ago'],
+  ['Gaming Influencers in India','Gaming & Esports','India',12,'48.3M',2.4,61,'5d ago'],
+  ['US Fitness Micro Influencers','Fitness & Wellness','United States',25,'1.2M',3.6,88,'1w ago'],
+  ['India Tech Influencers','Tech & Gadgets','India',11,'38.9M',0.9,17,'3d ago'],
+  ['Mumbai Food Bloggers','Food & Drink','Mumbai, India',20,'2.7M',3.1,104,'4d ago'],
+  ['NYC Fashion Influencers','Beauty & Fashion','New York, US',30,'9.8M',1.8,142,'6d ago'],
+  ['UK Parenting Influencers','Family & Parenting','United Kingdom',18,'1.9M',2.9,77,'1w ago'],
+  ['Dubai Luxury Travel Creators','Travel','Dubai, UAE',15,'4.4M',2.2,59,'2w ago'],
+  ['Bangalore Fitness Influencers','Fitness & Wellness','Bangalore, India',14,'820K',4.7,41,'5d ago'],
+  ['US Skincare Micro Influencers','Beauty & Fashion','United States',22,'1.1M',3.9,126,'3d ago'],
+  ['London Food Influencers','Food & Drink','London, UK',24,'3.3M',2.6,96,'1w ago'],
+  ['India Personal Finance Creators','Finance & Business','India',16,'11.2M',1.5,38,'4d ago'],
+  ['Toronto Lifestyle Influencers','Lifestyle','Toronto, Canada',17,'1.6M',2.8,64,'2w ago'],
+  ['LA Fitness Influencers','Fitness & Wellness','Los Angeles, US',26,'14.5M',1.7,151,'6d ago'],
+  ['Delhi Fashion Bloggers','Beauty & Fashion','Delhi, India',21,'5.2M',2.3,118,'1w ago'],
+  ['UK Gaming Creators','Gaming & Esports','United Kingdom',13,'3.9M',2.1,29,'2w ago'],
+  ['Sydney Food Bloggers','Food & Drink','Sydney, Australia',15,'980K',3.4,52,'1w ago'],
+  ['US Mom Influencers','Family & Parenting','United States',28,'7.1M',2.5,163,'5d ago']
+].map(([name, niche, place, n, reach, er, collabs, upd], i) => ({name, niche, place, n, reach, er, collabs, upd, i}));
+const CREATORS = ['maya.makes.faces','ig_mortal','scoutop','payalgamingg','ujjwalgamer','thepaletteedit','glowwithjo','dynamo__gaming','kaaashvi','mythpat','brushesandbrunch','lashlab.london','nailedit.nadia','softglam.sam','bareskin.ben','ig_jonathangaming','soul_regaltos','8bit_thug'];
+const NICHES = [...new Set(LISTS.map(l => l.niche))];
+const PLACES = {'India':['India','Mumbai','Delhi','Bangalore'], 'United States':['United States','New York','Los Angeles'], 'United Kingdom & more':['United Kingdom','London','Dubai','Toronto','Sydney']};
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const best = l => `${l.n} Best ${l.name}`;
+const LINK = 'list_demo.html';
+
+$('#facts').innerHTML = `<span><b>${LISTS.length}</b>lists</span><span><b>${LISTS.reduce((t, l) => t + l.n, 0)}</b>creators</span><span><b>${LISTS.reduce((t, l) => t + l.collabs, 0).toLocaleString()}</b>brand collab posts tracked</span><span><b>Nov 2026</b>last refresh</span>`;
+$('#pop').innerHTML = ['London beauty','gaming India','US fitness','Mumbai food','NYC fashion'].map(p => `<a href="#" data-q="${p}">${p}</a>`).join(' ');
+
+const faces = l => `<div class="faces" aria-hidden="true">${'ABCDE'.split('').map((_, k) => `<i>${String.fromCharCode(65 + (l.i * 3 + k * 7) % 26)}</i>`).join('')}</div>`;
+$('#lgrid').innerHTML = LISTS.slice(0, 6).map(l => `
+  <a class="lcard" href="${LINK}">
+    <div class="lmeta"><span class="tag">${esc(l.niche)}</span><span>${esc(l.place)}</span><span>· updated ${l.upd}</span></div>
+    <h3>${esc(best(l))}</h3>
+    ${faces(l)}
+    <dl class="lstats"><div><dt>Combined reach</dt><dd>${l.reach}</dd></div><div><dt>Median eng.</dt><dd>${l.er}%</dd></div><div><dt>Collab posts</dt><dd>${l.collabs}</dd></div></dl>
+  </a>`).join('');
+
+const ago = u => ({d:1, w:7})[u.slice(-5,-4)] * parseInt(u);
+$('#recent').innerHTML = LISTS.slice().sort((a, b) => ago(a.upd) - ago(b.upd)).slice(0, 5).map(l => `<li><a href="${LINK}"><b>${esc(best(l))}</b><small>${esc(l.place)} · ${l.collabs} collab posts</small><em>${l.upd}</em></a></li>`).join('');
+$('#nsub').textContent = `${LISTS.length} lists across ${NICHES.length} niches.`;
+$('#ngrid').innerHTML = NICHES.map(nm => {
+  const ls = LISTS.filter(l => l.niche === nm);
+  return `<div class="niche"><h3>${esc(nm)} <span>${ls.length} list${ls.length > 1 ? 's' : ''}</span></h3><ul>${ls.slice(0, 3).map(l => `<li><a href="${LINK}">${esc(l.name)}</a></li>`).join('')}</ul><a class="all" href="#">All ${esc(nm)} lists</a></div>`;
+}).join('');
+
+$('#pgrid').innerHTML = Object.entries(PLACES).map(([region, ps]) => `<div class="place"><h3>${esc(region)}</h3><div class="chips">${ps.map(p => `<a href="#" data-q="${esc(p)}">${esc(p)}</a>`).join('')}</div></div>`).join('');
+$('#az').innerHTML = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(c => `<a href="#">${c}</a>`).join('') + '<a href="#" style="width:auto;padding:0 12px">0–9</a>';
+$('#fn').innerHTML = NICHES.slice(0, 6).map(n => `<li><a href="#niches">${esc(n)}</a></li>`).join('');
+$('#fl').innerHTML = LISTS.slice(0, 6).map(l => `<li><a href="${LINK}">${esc(l.name)}</a></li>`).join('');
+
+/* search: lists by name, niche or place; creators by username */
+const q = $('#q'), res = $('#res');
+function search(term){
+  const words = term.toLowerCase().split(/\s+/).filter(Boolean);
+  if (!words.length){ res.hidden = true; q.setAttribute('aria-expanded', 'false'); return; }
+  const hay = l => (l.name + ' ' + l.niche + ' ' + l.place).toLowerCase();
+  const lists = LISTS.filter(l => words.every(w => hay(l).includes(w))).slice(0, 6);
+  const people = CREATORS.filter(u => words.some(w => u.includes(w.replace('@', '')))).slice(0, 5);
+  res.innerHTML = (lists.length ? `<h3>Lists</h3>${lists.map(l => `<a href="${LINK}"><span>${esc(best(l))}</span><small>${l.n} creators</small></a>`).join('')}` : '')
+    + (people.length ? `<h3>Creators</h3>${people.map(u => `<a href="${LINK}"><span>@${esc(u)}</span><small>on 1 list</small></a>`).join('')}` : '')
+    || `<p class="empty">No list for “${esc(term)}” yet. <a href="#" style="display:inline;padding:0;text-decoration:underline">Request this list</a></p>`;
+  res.hidden = false; q.setAttribute('aria-expanded', 'true');
+}
+q.addEventListener('input', () => search(q.value));
+q.addEventListener('focus', () => q.value && search(q.value));
+q.addEventListener('keydown', e => { if (e.key === 'ArrowDown'){ const a = res.querySelector('a'); if (a){ e.preventDefault(); a.focus(); } } if (e.key === 'Escape'){ res.hidden = true; } });
+res.addEventListener('keydown', e => {
+  const items = [...res.querySelectorAll('a')], i = items.indexOf(document.activeElement);
+  if (e.key === 'ArrowDown' && i < items.length - 1){ e.preventDefault(); items[i + 1].focus(); }
+  if (e.key === 'ArrowUp'){ e.preventDefault(); (i > 0 ? items[i - 1] : q).focus(); }
+  if (e.key === 'Escape'){ res.hidden = true; q.focus(); }
+});
+document.addEventListener('click', e => { if (!e.target.closest('.search')) res.hidden = true; });
+$('#sform').addEventListener('submit', e => { e.preventDefault(); const a = res.querySelector('a'); search(q.value); if (a) location.href = a.href; });
+document.querySelectorAll('[data-q]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); q.value = a.dataset.q; q.focus(); search(q.value); window.scrollTo({top: 0}); }));
+</script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pricing for creators · Creatormatchr</title>
+<meta name="description" content="Get a labelled featured spot on Creatormatchr influencer lists that brands use to find creators. Plans from $15 a month. Being listed is always free.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F8FA; --surface:#FFFFFF; --ink:#19172B; --muted:#5E6175; --rule:#E3E5EC; --soft:#EEF0F5;
+  --marigold:#F5B700; --marigold-deep:#C99200; --marigold-tint:#FFF4CC; --ok:#1E8E5A;
+  --gold:#D4A017; --gold-ink:#9A7300; --silver:#A9B2BE; --silver-ink:#5F6B7A; --bronze:#C58552; --bronze-ink:#8A4A1C;
+  --display:'Bricolage Grotesque', system-ui, sans-serif; --body:'Instrument Sans', system-ui, sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:16.5px/1.6 var(--body)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--marigold);outline-offset:2px}
+.site{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 32px;background:var(--surface);border-bottom:1px solid var(--rule)}
+.logo{font:800 22px/1 var(--display);letter-spacing:-.02em;text-decoration:none}
+.logo span{background:var(--marigold);padding:0 4px;border-radius:4px}
+.site nav{display:flex;gap:24px;align-items:center;font-weight:500}
+.site nav a{text-decoration:none}
+.site nav a[aria-current]{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px;text-decoration-color:var(--marigold)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 15px/1 var(--body);border-radius:999px;padding:12px 18px;border:1px solid var(--ink);background:var(--surface);color:var(--ink);cursor:pointer;text-decoration:none}
+.btn.primary{background:var(--marigold);border-color:var(--marigold-deep)}
+.btn.small{padding:8px 13px;font-size:14px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 32px}
+
+.hero{padding:56px 0 8px;text-align:center}
+.hero h1{font:800 clamp(34px,5vw,56px)/1.04 var(--display);letter-spacing:-.035em;margin:0 auto;max-width:18ch}
+.hero p{max-width:60ch;margin:18px auto 0;color:var(--muted);font-size:18px}
+.free{display:inline-flex;gap:10px;align-items:center;margin:22px auto 0;padding:10px 16px;border-radius:999px;background:var(--surface);border:1px solid var(--rule);font-size:15px}
+.free b{color:var(--ok)}
+
+.toggle{display:flex;justify-content:center;margin:34px 0 0}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--rule);border-radius:999px;padding:4px}
+.seg button{border:0;background:none;border-radius:999px;padding:9px 18px;font:600 15px/1 var(--body);cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.save{margin-left:6px;font-size:12px;background:var(--marigold-tint);color:var(--ink);border-radius:999px;padding:3px 7px}
+
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:28px 0 0;align-items:stretch}
+.plan{position:relative;background:var(--surface);border:2px solid var(--rule);border-radius:16px;padding:26px 24px 24px;display:flex;flex-direction:column}
+.plan.boost{border-color:var(--bronze)}.plan.featured{border-color:var(--silver);box-shadow:0 14px 34px rgba(25,23,43,.1)}.plan.spotlight{border-color:var(--gold)}
+.pop{position:absolute;top:-13px;left:24px;background:var(--ink);color:#fff;font:600 12.5px/1 var(--body);padding:6px 10px;border-radius:999px}
+.plan h2{font:700 24px/1.1 var(--display);margin:0;display:flex;align-items:center;gap:10px}
+.dot{width:12px;height:12px;border-radius:50%}
+.boost .dot{background:var(--bronze)}.featured .dot{background:var(--silver)}.spotlight .dot{background:var(--gold)}
+.where{margin:6px 0 0;color:var(--muted);font-size:15px}
+.price{margin:20px 0 0;display:flex;align-items:baseline;gap:6px}
+.price b{font:800 46px/1 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.price span{color:var(--muted);font-size:15px}
+.billed{margin:6px 0 0;font-size:13.5px;color:var(--muted);min-height:1.4em}
+.plan .btn{margin:20px 0 0;width:100%}
+.plan ul{list-style:none;margin:22px 0 0;padding:0;font-size:15px;display:flex;flex-direction:column;gap:9px}
+.plan li{display:flex;gap:10px;align-items:flex-start}
+.plan li svg{flex:none;width:18px;height:18px;margin-top:3px;color:var(--ok)}
+.plan li.inh{color:var(--muted)}
+
+/* where your spot appears */
+section{margin-top:80px}
+h2.sec{font:800 clamp(28px,3.4vw,38px)/1.08 var(--display);letter-spacing:-.025em;margin:0 0 10px}
+.lead{color:var(--muted);max-width:62ch;margin:0}
+.placement{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center;margin-top:28px}
+.mini{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:7px}
+.mini .r{display:flex;align-items:center;gap:10px;height:30px;border-radius:7px;background:var(--paper);padding:0 10px;font-size:13px;color:var(--muted)}
+.mini .r i{width:20px;height:20px;border-radius:5px;background:var(--marigold);font:800 12px/20px var(--display);text-align:center;color:var(--ink);font-style:normal}
+.mini .r s{flex:1;height:8px;border-radius:4px;background:var(--soft);text-decoration:none}
+.mini .r.f{height:36px;font-weight:600;color:var(--ink);border:2px solid}
+.mini .r.f.sp{border-color:var(--gold);background:#FFF8E3}.mini .r.f.fe{border-color:var(--silver);background:#F3F5F8}.mini .r.f.bo{border-color:var(--bronze);background:#FCF1E8}
+.mini .r.f i{background:transparent;border:2px solid currentColor}
+.mini .r.f.sp i{color:var(--gold-ink)}.mini .r.f.fe i{color:var(--silver-ink)}.mini .r.f.bo i{color:var(--bronze-ink)}
+.rules{display:flex;flex-direction:column;gap:16px}
+.rules div{border-left:3px solid var(--rule);padding:2px 0 2px 16px}
+.rules h3{font:700 18px/1.25 var(--display);margin:0 0 4px}
+.rules p{margin:0;color:var(--muted);font-size:15.5px}
+
+/* compare table */
+.tw{overflow-x:auto;background:var(--surface);border:1px solid var(--rule);border-radius:14px;margin-top:24px}
+table{width:100%;border-collapse:collapse;min-width:640px;font-size:15px}
+th,td{padding:13px 18px;border-bottom:1px solid var(--soft);text-align:left;vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+thead th{font:700 16px/1.2 var(--display);background:var(--surface)}
+td:not(:first-child),th:not(:first-child){text-align:center;width:17%}
+td:first-child{color:var(--ink)}
+td .no{color:#B4B8C5}
+td svg{width:18px;height:18px;color:var(--ok);vertical-align:-3px}
+.grp td{background:var(--paper);font-weight:600;font-size:13.5px;color:var(--muted)}
+
+/* faq */
+.faq{max-width:780px}
+.faq details{border-bottom:1px solid var(--rule);padding:16px 0}
+.faq summary{cursor:pointer;font-weight:600;font-size:17px}
+.faq p{margin:10px 0 0;color:var(--muted)}
+
+.cta{margin:80px 0 0;background:var(--ink);color:#fff;border-radius:20px;padding:40px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px}
+.cta h2{font:800 30px/1.1 var(--display);margin:0;max-width:22ch}
+.cta p{margin:8px 0 0;color:#D6D6E2}
+footer{margin-top:80px;border-top:1px solid var(--rule);padding:28px 32px;color:var(--muted);font-size:14px;display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;background:var(--surface)}
+footer nav{display:flex;flex-wrap:wrap;gap:18px}
+footer a{text-decoration:none}
+
+@media (max-width:900px){
+  .plans{grid-template-columns:1fr;max-width:480px;margin-left:auto;margin-right:auto}
+  .placement{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .wrap{padding:0 18px}
+  .site{padding:14px 18px}.site nav a:not(.btn):not([aria-current]){display:none}
+  .hero{padding-top:36px}
+  .cta{padding:28px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="site">
+  <a class="logo" href="index.html">creator<span>matchr</span></a>
+  <nav aria-label="Main"><a href="index.html">Find influencers</a><a href="#">Methodology</a><a href="pricing.html" aria-current="page">Pricing</a><a class="btn primary small" href="list_v2.html#custom-list">Get a custom list</a></nav>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <h1>Get seen by brands that are looking for creators</h1>
+    <p>Our lists are where brands start their creator search. A featured spot puts your profile, stats and contact details where they're reading, clearly labelled as paid.</p>
+    <div class="free"><b>Free:</b> being on a list. Our editors choose creators on data, and nobody can pay to be numbered.</div>
+  </div>
+
+  <div class="toggle">
+    <div class="seg" role="group" aria-label="Billing period">
+      <button type="button" data-bill="m" aria-pressed="true">Monthly</button>
+      <button type="button" data-bill="y" aria-pressed="false">Yearly <span class="save">Save 20%</span></button>
+    </div>
+  </div>
+
+  <div class="plans" id="plans"></div>
+
+  <section aria-labelledby="where">
+    <h2 class="sec" id="where">Where your spot appears</h2>
+    <p class="lead">Every list has a fixed number of featured spots, so a featured profile always stands out. Positions adjust to the length of the list.</p>
+    <div class="placement">
+      <div class="mini" aria-label="Example list of 10 creators with featured spots">
+        <div class="r f sp"><i>★</i>Spotlight: above #1</div>
+        <div class="r"><i>1</i><s></s></div><div class="r"><i>2</i><s></s></div><div class="r"><i>3</i><s></s></div><div class="r"><i>4</i><s></s></div><div class="r"><i>5</i><s></s></div>
+        <div class="r f fe"><i>★</i>Featured: middle of the list</div>
+        <div class="r"><i>6</i><s></s></div><div class="r"><i>7</i><s></s></div><div class="r"><i>8</i><s></s></div>
+        <div class="r f bo"><i>★</i>Boost: lower in the list</div>
+        <div class="r"><i>9</i><s></s></div><div class="r"><i>10</i><s></s></div>
+      </div>
+      <div class="rules">
+        <div><h3>Always labelled</h3><p>Featured rows carry a "Featured · Paid placement" bar, as US (FTC) and Indian (ASCI) advertising rules require. Readers trust a list more when the paid spots are obvious.</p></div>
+        <div><h3>Never numbered</h3><p>Featured spots sit between the numbered entries. Paying doesn't change the editorial list or anyone's position in it.</p></div>
+        <div><h3>Limited per list</h3><p>One Spotlight, one Featured and up to two Boost spots per list, so you're never one of twenty ads.</p></div>
+        <div><h3>Lists that fit you</h3><p>You pick lists that match your niche and location. We check the fit before your spot goes live.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="cmp">
+    <h2 class="sec" id="cmp">Compare plans</h2>
+    <div class="tw">
+      <table>
+        <thead><tr><th scope="col"></th><th scope="col">Free</th><th scope="col">Boost</th><th scope="col">Featured</th><th scope="col">Spotlight</th></tr></thead>
+        <tbody id="cmpBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="faq" aria-labelledby="fq">
+    <h2 class="sec" id="fq">Questions creators ask</h2>
+    <details open><summary>Do I have to pay to be on a list?</summary><p>No. Editors choose creators for each list from their public data, and that's free. Paid plans only add a separate, labelled featured spot.</p></details>
+    <details><summary>Will paying move me up the numbered list?</summary><p>No. The numbered list is editorial. Your featured spot appears in addition to it, marked as paid.</p></details>
+    <details><summary>Which lists can I appear on?</summary><p>Lists that match your niche and location, for example "Best Gaming Influencers in India". If the right list doesn't exist yet, tell us and we'll consider building it.</p></details>
+    <details><summary>Where does my data come from?</summary><p>Your follower count, engagement and recent posts come from Instagram's official API and refresh automatically. Any creator can claim their profile for free to correct their location, niche and contact email.</p></details>
+    <details><summary>Can I cancel?</summary><p>Yes, anytime. Your spot stays live until the end of the period you've paid for.</p></details>
+    <details><summary>What if a list's featured spots are full?</summary><p>You can join the waitlist for that list, or choose another list that fits. Yearly plans get first pick of open spots.</p></details>
+  </section>
+
+  <div class="cta">
+    <div><h2>Not sure which plan fits?</h2><p>Start with Featured. You can switch plans anytime.</p></div>
+    <a class="btn primary" href="#plans">Choose a plan</a>
+  </div>
+</main>
+
+<footer>
+  <span>© 2026 Creatormatchr</span>
+  <nav aria-label="Footer"><a href="#">About</a><a href="pricing.html">Pricing</a><a href="#">Methodology</a><a href="#">Editorial policy</a><a href="#">Claim or remove</a><a href="#">Privacy</a><a href="#">Terms</a></nav>
+</footer>
+
+<script>
+const TICK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const PLANS = [
+  {id:'boost', name:'Boost', where:'Lower in the list', m:15, y:144, cta:'Choose Boost',
+   inherit:null, items:['Featured row lower in 1 list','Labelled "Featured · Paid placement"','Your own button, like "Media kit" or "Book me"','Stats refreshed monthly']},
+  {id:'featured', name:'Featured', where:'Middle of the list', m:25, y:240, cta:'Choose Featured', popular:true,
+   inherit:'Everything in Boost, plus:', items:['Featured row mid-list on up to 3 lists','Pick 3 collab posts to show on your row','Stats refreshed weekly']},
+  {id:'spotlight', name:'Spotlight', where:'At the top, above #1', m:69, y:660, cta:'Choose Spotlight',
+   inherit:'Everything in Featured, plus:', items:['First profile readers see, on up to 5 lists','Suggested in custom lists for matching brands','Monthly report of profile views and clicks']}
+];
+const ROWS = [
+  ['Placement'],
+  ['Listed by editors, numbered', 1,1,1,1],
+  ['Featured spot', '—','Lower','Middle','Above #1'],
+  ['Lists', '—','1','Up to 3','Up to 5'],
+  ['Your row'],
+  ['Live stats from Instagram', 1,1,1,1],
+  ['Your own button (Media kit, Book me)', 0,1,1,1],
+  ['Choose your 3 collab posts', 0,0,1,1],
+  ['Stats refresh', 'Monthly','Monthly','Weekly','Weekly'],
+  ['Reach'],
+  ['Suggested in custom lists for brands', 0,0,0,1],
+  ['Monthly views and clicks report', 0,0,0,1],
+  ['Price per month', '$0','$15','$25','$69']
+];
+let bill = 'm';
+function drawPlans(){
+  document.getElementById('plans').innerHTML = PLANS.map(p => {
+    const per = bill === 'm' ? p.m : Math.round(p.y / 12 * 100) / 100;
+    const shown = Number.isInteger(per) ? per : per.toFixed(2);
+    return `<div class="plan ${p.id}">
+      ${p.popular ? '<span class="pop">Most popular</span>' : ''}
+      <h2><span class="dot" aria-hidden="true"></span>${p.name}</h2>
+      <p class="where">${p.where}</p>
+      <div class="price"><b>$${shown}</b><span>/ month</span></div>
+      <p class="billed">${bill === 'm' ? 'Billed monthly. Cancel anytime.' : `$${p.y} billed yearly (save 20%)`}</p>
+      <a class="btn${p.popular ? ' primary' : ''}" href="#">${p.cta}</a>
+      <ul>${p.inherit ? `<li class="inh">${p.inherit}</li>` : ''}${p.items.map(i => `<li>${TICK}<span>${i}</span></li>`).join('')}</ul>
+    </div>`;
+  }).join('');
+}
+document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => {
+  bill = b.dataset.bill;
+  document.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  drawPlans();
+}));
+document.getElementById('cmpBody').innerHTML = ROWS.map(r => r.length === 1
+  ? `<tr class="grp"><td colspan="5">${r[0]}</td></tr>`
+  : `<tr><td>${r[0]}</td>${r.slice(1).map(v => `<td>${v === 1 ? TICK + '<span style="position:absolute;left:-9999px">Included</span>' : v === 0 ? '<span class="no" aria-label="Not included">—</span>' : v}</td>`).join('')}</tr>`).join('');
+drawPlans();
+</script>
+</body>
+</html>
